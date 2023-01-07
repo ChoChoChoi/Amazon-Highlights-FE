@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amazonhighlights-dev-154041-authRole",
+      "UnauthRoleArn": "arn:aws:iam::574231532927:role/amplify-amazonhighlights-dev-154041-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::574231532927:role/amplify-amazonhighlights-dev-154041-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-amazonhighlights-dev-154041-deployment",
+      "UnauthRoleName": "amplify-amazonhighlights-dev-154041-unauthRole",
+      "StackName": "amplify-amazonhighlights-dev-154041",
+      "StackId": "arn:aws:cloudformation:us-east-1:574231532927:stack/amplify-amazonhighlights-dev-154041/b7c3a2d0-8bfa-11ed-af26-0a4580dc23a9",
+      "AmplifyAppId": "d1u3pphcaxpnrv"
+    },
+    "categories": {
+      "api": {
+        "amazonhighlights": {}
+      }
+    }
+  }
+}
