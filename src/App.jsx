@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import API from Amplify library
-import { API } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 // import query definition
 import { listUsers } from "./graphql/queries";
 
@@ -27,6 +27,7 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Slide from "@mui/material/Slide";
+import { createUser } from "./graphql/mutations";
 
 const theme = createTheme({
   palette: {
@@ -80,7 +81,6 @@ export default function App() {
     console.log({
       name: data.get("name"),
       email: data.get("email"),
-      password: data.get("password"),
     });
   };
 
@@ -101,6 +101,17 @@ export default function App() {
       setUsers(postData.data.listUsers.items);
     } catch (err) {
       console.log({ err });
+    }
+  }
+
+  async function registerUser() {
+    // https://aws.amazon.com/blogs/mobile/build-real-time-multi-user-experiences-using-graphql-on-aws-amplify/
+    try {
+      const registerUserdata = await API.graphql(
+        graphqlOperation(createUser, { input: { id: user.email , name: user.name , tag: user.tag. } })
+      );
+    } catch (e) {
+      console.log({ e });
     }
   }
 
