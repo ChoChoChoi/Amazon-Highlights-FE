@@ -16,7 +16,7 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import IconButton from "@mui/material/IconButton";
-import { createUser } from "./graphql/mutations";
+import { createTodo, createUser } from "./graphql/mutations";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import List from "@mui/material/List";
@@ -28,6 +28,8 @@ import { TransitionGroup } from "react-transition-group";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Backdrop from "@mui/material/Backdrop";
+import Alert from "@mui/material/Alert";
+import CloseIcon from "@mui/icons-material/Close";
 
 const theme = createTheme({
   palette: {
@@ -113,6 +115,7 @@ export default function App() {
   async function createUserFunction() {
     // https://aws.amazon.com/blogs/mobile/build-real-time-multi-user-experiences-using-graphql-on-aws-amplify/
     //https://github.com/SamWSoftware/amplify-react-tutorial-project/blob/amplify-upload/src/App.jsx
+
     try {
       const userdata = {
         // id: unstable_useId(),
@@ -121,7 +124,9 @@ export default function App() {
         tag: tagsInBasket,
       };
       console.log(userdata);
-      await API.graphql(graphqlOperation(createUser, { input: userdata }));
+      console.log(
+        await API.graphql(graphqlOperation(createUser, { input: userdata }))
+      );
     } catch (e) {
       console.log({ e });
     }
@@ -130,7 +135,6 @@ export default function App() {
   const handleonClick = () => {
     if (step === 1 || step === 2) setStep(step + 1);
     if (step === 3) {
-      setOpen(true);
       console.log(open);
       createUserFunction();
       setStep(1);
@@ -196,14 +200,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <Box sx={{ flexGrow: 1, minHeight: "100vh" }} height="100vh">
         <Grid container sx={{ minheight: "100vh" }}>
-          <Grid
-            item
-            xs={12}
-            sm={8}
-            alignItems="center"
-            justifyContent="center"
-            minHeight="100vh"
-          >
+          <Grid item xs={12} sm={8} alignItems="center" justifyContent="center">
             <Box
               // bgcolor={theme.palette.primary.main}
               sx={{
@@ -212,6 +209,7 @@ export default function App() {
                 background:
                   "radial-gradient(ellipse at center, #B08030, #030425)",
                 /* Created with https://www.css-gradient.com */
+                minHeight: "100vh",
               }}
               // fec934
               component={Grid}
@@ -243,7 +241,7 @@ export default function App() {
                 />
               </Card>
               <Box>
-                <Typography variant="h3" gutterBottom fontWeight={700}>
+                <Typography variant="h4" gutterBottom fontWeight={700}>
                   Amazon Highlights
                 </Typography>
                 <Typography sx={{ width: "50vh" }} gutterTop fontWeight={400}>
@@ -291,7 +289,13 @@ export default function App() {
             >
               <Grid item container direction="column">
                 <Grid item>
-                  <Typography variant="h1" gutterBottom fontWeight={700}>
+                  <Typography
+                    sx={{
+                      typography: { sm: "h1", xs: "h2" },
+                      fontWeight: { sm: 700, xs: 700 },
+                    }}
+                    gutterBottom
+                  >
                     Welcome
                   </Typography>
                 </Grid>
@@ -409,13 +413,18 @@ export default function App() {
                   </ColorButton>
                 )}
                 {step === 3 && (
-                  <ColorButton
-                    sx={{ width: 200, padding: 1 }}
-                    onClickCapture={handleonClick}
-                    onClick={handleonClick}
+                  <div
+                    onClick={() => {
+                      setOpen(true);
+                    }}
                   >
-                    Submit
-                  </ColorButton>
+                    <ColorButton
+                      sx={{ width: 200, padding: 1 }}
+                      onClick={handleonClick}
+                    >
+                      Submit
+                    </ColorButton>
+                  </div>
                 )}
 
                 {step !== 1 && (
